@@ -5,10 +5,13 @@ import './index.css';
 import 'antd/dist/antd.css';
 import Root from './pages/index';
 import reportWebVitals from './reportWebVitals';
+import { AppProvider } from './store';
 
 ReactDOM.render(
   <BrowserRouter>
+    <AppProvider>
       <Root />
+    </AppProvider>
   </BrowserRouter>,
   document.getElementById('root')
 );

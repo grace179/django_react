@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import Axios from 'axios';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { SmileOutlined , FrownOutlined } from '@ant-design/icons';
 import { Form, Input, Button, notification} from 'antd';
 import useLocalStorage from '../utils/userLocalStorage';
+import { useAppContext, setToken } from '../../store';
 
 function Login() {
+  const { store, dispatch } = useAppContext();
+  const location = useLocation();
+
   const history = useHistory();
-  const [jwtToken, setJwtToken] = useLocalStorage("jwtToken", "");
   const [fieldErrors, setfieldErrors] = useState({});
 
-  // console.log("loaded jwtToken", jwtToken);
-
+  const { from: loginRedirectUrl } = location.state || { from : { pathname: "/" }};
+  console.log("location", location.state);
+  
   const onFinish = values => {
     async function fn(){
       const { username, password } = values;
@@ -24,14 +28,17 @@ function Login() {
           "http://localhost:8000/accounts/token/", 
           data);
           const { data : { token : jwtToken }} = response;
-          setJwtToken(jwtToken);
+          
+          dispatch(setToken(jwtToken));
+
+          // setJwtToken(jwtToken);
           // console.log("response : ", jwtToken);
         
         notification.open({
           message: "로그인 성공",
-          description: "로그인 페이지로 이동합니다.",
           icon: <SmileOutlined style={{ color: "#108ee9" }} />
         });
+        history.push(loginRedirectUrl);
         // history.push('/accounts/login');
         
       }catch(error){
