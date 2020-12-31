@@ -4,12 +4,13 @@ import AppLayout from '../components/AppLayout';
 import About from './About';
 import AccountsRoutes from './accounts';
 import Home from './Home';
+import LoginRequireRoute from './utils/LoginRequireRoute';
 
 function Root(){
   return (
   <AppLayout>
     {/* 최상위 컴포넌트 */}
-    <Route exact path="/" component={Home}/>
+    <LoginRequireRoute exact path="/" component={Home}/>
     <Route exact path="/about" component={About}/>
     <Route path="/accounts" component={AccountsRoutes}/>
   </AppLayout>);
