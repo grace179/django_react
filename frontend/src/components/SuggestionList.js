@@ -1,9 +1,8 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './SuggestionList.scss';
 import { Card } from 'antd';
 import Suggestion from './Suggestion';
-import useAxios from 'axios-hooks';
-import Axios from 'axios';
+import { axiosInstance, useAxios } from '../api';
 import { useAppContext } from '../store';
 
 function SuggestionList() {
@@ -14,7 +13,7 @@ function SuggestionList() {
   const headers = { Authorization: `JWT ${jwtToken}`};
 
   const [{ data: originUserList, loading, error }, refetch] = useAxios({
-    url:"http://localhost:8000/accounts/suggestions/",
+    url:"/accounts/suggestions/",
     headers,
   });
 
@@ -27,7 +26,7 @@ function SuggestionList() {
   const onFollowUser = username => {
     const data = { username };
     const config = { headers }
-    Axios.post("http://localhost:8000/accounts/follow/", data, config)
+    axiosInstance.post("/accounts/follow/", data, config)
       .then(response => {
         setUserList(prevUserList => 
           prevUserList.map(user => 
