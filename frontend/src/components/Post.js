@@ -2,9 +2,9 @@ import React from 'react'
 import { Card, Avatar } from 'antd';
 import { HeartOutlined, HeartFilled } from '@ant-design/icons';
 
-function Post({post}){
+function Post({ post, handleLike }){
   
-  const { author, caption, location, photo, tag_set, like_user_set } = post;
+  const { author, caption, location, photo, tag_set, is_like } = post;
   const {username, name, avatar_url} = author;
 
   return (
@@ -13,7 +13,13 @@ function Post({post}){
       hoverable
       cover={
       <img src={photo} alt={caption}/>}
-      actions={[<HeartOutlined/>]}
+      actions={[
+        is_like ? (
+          <HeartFilled FiilColor="pink"
+            onClick={() => handleLike({post, isLike: false})}/>
+            ) : (
+          <HeartOutlined onClick={() => handleLike({post, isLike: true})}/>)
+    ]}
     >
     <Card.Meta 
       avatar={<Avatar size="large" 
