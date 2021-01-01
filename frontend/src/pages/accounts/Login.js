@@ -5,6 +5,7 @@ import { SmileOutlined , FrownOutlined } from '@ant-design/icons';
 import { Form, Input, Button, notification} from 'antd';
 import useLocalStorage from '../utils/userLocalStorage';
 import { useAppContext, setToken } from '../../store';
+import { parseErrorMessages } from '../utils/forms';
 
 function Login() {
   const { store, dispatch } = useAppContext();
@@ -52,14 +53,8 @@ function Login() {
           const { data: fieldsErrorMessages } = error.response;
 
           setfieldErrors(
-            Object.entries(fieldsErrorMessages).reduce(
-              (acc, [fieldName, errors]) => {
-                acc[fieldName] = {
-                  validateStatus: "error",
-                  help: errors.join(" ")
-                };
-                return acc;
-            },{}));
+            parseErrorMessages(fieldsErrorMessages)
+            );
         }
       }
     }

@@ -1,10 +1,8 @@
 import React from 'react';
 import { Input , Menu} from 'antd';
 import './AppLayout.scss';
-import StoryList from './StoryList';
-import SuggestionList from './SuggestionList';
 
-function AppLayout({children}) {
+function AppLayout({children, sidebar}) {
   return (
     <div className="app">
       <div className="header">
@@ -23,8 +21,8 @@ function AppLayout({children}) {
       
       <div className="contents">{children}</div>
       <div className="sidebar">
-        <StoryList/>
-        <SuggestionList/>
+        {sidebar}
+        
       </div>
       
       <div className="footer">&copy; {new Date().getFullYear()} u0choi</div>
