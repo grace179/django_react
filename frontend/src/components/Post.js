@@ -1,11 +1,12 @@
 import React from 'react'
-import { Card, Avatar } from 'antd';
+import { Card, Avatar, Comment, Tooltip } from 'antd';
 import { HeartOutlined, HeartFilled } from '@ant-design/icons';
+import CommentList from './CommentList';
 
 function Post({ post, handleLike }){
-  
   const { author, caption, location, photo, tag_set, is_like } = post;
   const {username, name, avatar_url} = author;
+
 
   return (
   <div>
@@ -15,7 +16,7 @@ function Post({ post, handleLike }){
       <img src={photo} alt={caption}/>}
       actions={[
         is_like ? (
-          <HeartFilled FiilColor="pink"
+          <HeartFilled style={{color:"#f593c8"}}
             onClick={() => handleLike({post, isLike: false})}/>
             ) : (
           <HeartOutlined onClick={() => handleLike({post, isLike: true})}/>)
@@ -29,6 +30,9 @@ function Post({ post, handleLike }){
       title={location} 
       description={caption}
     />
+    {/* <h2>Comment List</h2>
+    {JSON.stringify(commentList)} */}
+    <CommentList post={post}/>
     </Card>
     {/* {caption}
     {location} */}
